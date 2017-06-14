@@ -1,0 +1,67 @@
+#!/usr/bin/env perl
+use Mojolicious::Lite;
+
+# Documentation browser under "/perldoc"
+plugin 'PODRenderer';
+
+get '/' => sub {
+  my $c = shift;
+  $c->render(template => 'index');
+};
+
+app->start;
+__DATA__
+
+@@ index.html.ep
+<html>
+<head>
+<title>Tier Calculator</title>
+<h1>Tier Calculator</h1>
+</head>
+
+<body>
+    <script>
+        function addFields(){
+            // Number of inputs to create
+            var number = document.getElementById("member").value;
+            // Container <div> where dynamic content will be placed
+            var container = document.getElementById("container");
+            // Clear previous contents of the container
+            while (container.hasChildNodes()) {
+                container.removeChild(container.lastChild);
+            }
+            for (i=0;i<number;i++){
+                // Append a node with a random text
+                container.appendChild(document.createTextNode("Tier " + (i+1)));
+                // Create an <input> element, set its type and name attributes
+                var tier = document.createElement("input");
+                tier.type = "number";
+                tier.name = "tier" + i;
+                container.appendChild(tier);
+                // Append a line break 
+                container.appendChild(document.createElement("br"));
+		// Append a node with a random text
+                container.appendChild(document.createTextNode("Min"));
+                // Create an <input> element, set its type and name attributes
+                var mini = document.createElement("input");
+                mini.type = "number";
+                mini.name = "mini" + i;
+                container.appendChild(mini);
+                // Append a line break 
+                container.appendChild(document.createElement("br"));
+                container.appendChild(document.createElement("br"));
+            }
+	document.getElementById("demo").onclick = function() {myFunction()};
+        }
+function myFunction() {
+    //document.getElementById("input").submit();
+	document.getElementById("demo").innerHTML = "YOU CLICKED ME!";
+}
+    </script>
+	<p id="demo">2. Click after entering all information.</p>
+    <input type="text" id="member" name="member" value="">Number of members: (max. 10)<br />
+    <a href="#" id="filldetails" onclick="addFields()">1. Fill Details</a>
+    <div id="container"/>
+
+</body>
+</html>
